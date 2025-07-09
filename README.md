@@ -5,6 +5,8 @@ and preserves phase information.
 As of July 2025, torchaudio implements SpecAugment partially, drops phase,
 and do not provide any documentation about their implementation.
 
+![SpecAugment Illustration](SpecAugment%20Illustrated.png)
+
 This version adds the missing time warping feature.
 See the [long explanation](#specaugment-rabbit-hole)
 
@@ -27,14 +29,14 @@ SpecAugmentWarp is implemented as PyTorch module.
 import torchaudio
 import spec_augment_warp as saw
 
-audio_tensor, frequency = torchaudio.load("MLKDream.wav")
+audio_tensor, frequency = torchaudio.load("audio.wav")
 
 spec_augment_warp_trans = saw.SpecAugmentWarp(
-    n_time_warps=8,
+    n_time_warps=2,
     time_warp_param=60,
-    n_time_masks=5,
+    n_time_masks=2,
     time_mask_param=80,
-    n_freq_masks=5,
+    n_freq_masks=2,
     freq_mask_param=40
 )
 # Get the complex spectrogram (important for phase conservation)
@@ -54,7 +56,7 @@ speed-up and a slow-down around a pivot axis.
 import torchaudio
 import spec_augment_warp as saw
 
-audio_tensor, frequency = torchaudio.load("MLKDream.wav")
+audio_tensor, frequency = torchaudio.load("audio.wav")
 
 # You can also use the TimeWarp transform directly
 time_warp_transform = saw.TimeWarp(time_warp_param=60)
